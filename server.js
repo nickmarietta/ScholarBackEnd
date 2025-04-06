@@ -1,9 +1,10 @@
 const express = require('express');
 const cors = require('cors');
-const users = require('./routes/users');
-const PORT = process.env.PORT || 8000;
-const app = express();
+const users = require('./routes/users'); // contains /signup, /login
 const modules = require('./routes/subject');
+const PORT = process.env.PORT || 8000;
+
+const app = express();
 
 app.use(cors({ origin: '*', methods: ['GET', 'POST', 'DELETE'] }));
 app.use(express.json());
