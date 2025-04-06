@@ -1,31 +1,16 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const app = express()
-const Test = require('./models/questions.model.js');
+const express = require('express');
+const cors = require('cors');
+const users = require('./routes/users');
+const PORT = process.env.PORT || 8000;
+const app = express();
 
+app.use(cors({ origin: '*', methods: ['GET', 'POST', 'DELETE'] }));
 app.use(express.json());
 
-app.post('/api/tests', async (req, res) => {
-  try {
-    const test = await Test.create(req.body);
-    res.status(200).json(product);
-  } catch (error) {
-      res.status(500).json({message: error.message});
-  }
+app.use('/users', users);
+
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
 });
 
-
-app.get('/', (req, res) => {
-  res.send("Hello from NodeAPI");
-});
-
-mongoose.connect("mongodb+srv://someUser:lCvSOxqDeRshhG4N@scholarspath.yprwrdl.mongodb.net/?retryWrites=true&w=majority&appName=ScholarsPath")
-  .then(() => {
-    console.log("connected to DB");
-    app.listen(3000, () => {
-      console.log("server is running on port 3000");
-    });
-  })
-  .catch((err) => {
-    console.error("Some MongoDB connection error:", err.message);
-  });
+module.exports = app;
